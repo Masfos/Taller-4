@@ -1,0 +1,62 @@
+@startuml
+class Pokemon {
+  - id: int
+  - nombrePokemon: String
+  - etapa: String
+  - evolucionSiguiente: String
+  - evolucionPrevia: String
+  - tipo1: String
+  - tipo2: String
+  + Pokemon(int id, String nombrePokemon,String etapa, String evolucionSiguiente,
+   String evolucionPrevia, String tipo1,String tipo2)
+  +get's()
+  +set's()
+}
+class Nodo {
+ - next: Nodo
+ - prev: Nodo
+ - dato: Pokemon
+ + Nodo(Pokemon dato)
+ +get's()
+ +set's()
+}
+class ListaNodos {
+  - head: Nodo
+  - tail: Nodo
+  - cantActual: int
+  + ListaNodos()
+  +get's()
+  +set's()
+}
+interface Pokedex {
+  + leerArchivos() throws IOException
+  + buscarPorNombre(String nombre)
+  + buscarPorID(int id)
+  + orden()
+  + cierreEpico()
+}
+
+class PokedexKanto {
+  - listaNodos: ListaNodos
+  - linkedList: LinkedList<Nodo>
+  - arrayList: ArrayList<String>
+  - arrayListInt: ArrayList<Integer>
+  + PokedexKanto()
+  + leerArchivos() throws IOException
+  + cierreEpico()
+  + buscarPorID(int id)
+  + buscarPorNombre(String nombre)
+  + orden()
+  - ordenAlfabetico(LinkedList<Nodo> linkedList, ArrayList<Integer> arrayList, ListaNodos listaNodos)
+  - ordenNumerico(LinkedList<Nodo> linkedList, ArrayList<Integer> arrayListInt, ListaNodos listaNodos)
+}
+class Main {
+  +main(args: String[]): void
+}
+Pokedex --|> PokedexKanto
+PokedexKanto "1" *-- "1" ListaNodos
+ListaNodos "1" o-- "1..*" Nodo
+Nodo "1" -- "1" Pokemon
+PokedexKanto "1" --* "1..*" Pokemon
+Main --> PokedexKanto
+@enduml
